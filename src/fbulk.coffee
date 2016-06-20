@@ -63,7 +63,10 @@ exports = module.exports = (opts = {}) ->
 
     fetch input, init
     .then (response) ->
-      response.json()
+      if response.ok
+        response.json()
+      else
+        response.json().then (res) -> Promise.reject res.error
     .then (data) ->
       results = calls.map (call, i) ->
         callResponse = data[i]
