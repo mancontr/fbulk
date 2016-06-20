@@ -1,0 +1,25 @@
+{
+  "name": "fbulk",
+  "version": "0.0.1",
+  "description": "An aid to make Facebook API bulk requests more easily",
+  "main": "lib/fbulk.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register",
+    "prepublish": "./node_modules/.bin/coffee --compile --output lib src/fbulk.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/anxo/fbulk.git"
+  },
+  "author": "Anxo Soto",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://gitlab.com/anxo/fbulk/issues"
+  },
+  "homepage": "https://gitlab.com/anxo/fbulk#README",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coffee-script": "^1.10.0",
+    "mocha": "^2.5.3"
+  }
+}
