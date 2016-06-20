@@ -18,8 +18,8 @@ Note that this library needs support for Promise and Fetch APIs.
 ## Usage
 
 ```
-Bulk = require('fbulk')
-q = Bulk access_token: 'my-user-token'
+Bulk = require 'fbulk'
+q = Bulk access_token: 'my-access-token'
 q.addCall target: 'me'
 q.addCall target: 'me/friends', params: limit: 50
 q.exec()
