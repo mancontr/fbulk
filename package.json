@@ -1,6 +1,6 @@
 {
   "name": "fbulk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An aid to make Facebook API bulk requests more easily",
   "main": "lib/fbulk.js",
   "scripts": {

@@ -11,12 +11,14 @@ For more info on bulk requests, see [Making multiple requests](https://developer
 npm install fbulk --save
 ```
 
+Note that this library needs support for Promise and Fetch APIs.
+
 ## Usage
 
 ```
 Bulk = require('fbulk')
-Bulk token: 'my-user-token'
-.addCall target: 'me'
-.addCall target: 'me/friends', params: limit: 50
-.exec()
+q = Bulk access_token: 'my-user-token'
+q.addCall target: 'me'
+q.addCall target: 'me/friends', params: limit: 50
+q.exec()
 ```

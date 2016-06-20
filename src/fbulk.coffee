@@ -50,15 +50,15 @@ exports = module.exports = (opts = {}) ->
       name: call.name
       body: call.body
 
-    body =
-      access_token: opts.access_token
-      batch: requests
+    body = new FormData()
+    body.append 'access_token', opts.access_token
+    body.append 'batch', JSON.stringify requests
 
 
     input = 'https://graph.facebook.com/'
     init =
       method: 'POST'
-      body: JSON.stringify body
+      body: body
       include_headers: opts.headers or false
 
     fetch input, init
