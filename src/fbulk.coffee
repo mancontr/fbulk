@@ -41,7 +41,7 @@ exports = module.exports = (opts = {}) ->
       if call.params
         params = []
         for key, value of call.params
-          params.push encodeURIComponent key + '=' + encodeURIComponent value
+          params.push encodeURIComponent(key) + '=' + encodeURIComponent(value)
         if params.length
           relative_url += '?' + params.join '&'
       # Request JSON fragment
@@ -53,13 +53,13 @@ exports = module.exports = (opts = {}) ->
     body = new FormData()
     body.append 'access_token', opts.access_token
     body.append 'batch', JSON.stringify requests
+    body.append 'include_headers', opts.headers or false
 
 
     input = 'https://graph.facebook.com/'
     init =
       method: 'POST'
       body: body
-      include_headers: opts.headers or false
 
     fetch input, init
     .then (response) ->
