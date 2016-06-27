@@ -8,7 +8,28 @@ Returns an object with methods for chaining calls, and executing them.
 Opts:
  - access_token: [required] The access token to use for the facebook calls.
  - headers: Whether or not to include headers in the responses. Default: false.
+ - api: The function to call to perform the requests.
+        Defaults to internal (using fetch); the FB SDK can be used instead.
 ###
+
+fetcher = (path, method, params, callback) ->
+  body = new FormData()
+  for key, value of params
+    body.append key, value
+
+  input = 'https://graph.facebook.com' + path
+  init =
+    method: method
+    body: body
+
+  fetch input, init
+  .then (response) ->
+    response.json()
+  .then (responseJson) ->
+    callback responseJson
+  .catch (err) ->
+    callback err
+
 exports = module.exports = (opts = {}) ->
   calls = []
 
@@ -50,23 +71,18 @@ exports = module.exports = (opts = {}) ->
       name: call.name
       body: call.body
 
-    body = new FormData()
-    body.append 'access_token', opts.access_token
-    body.append 'batch', JSON.stringify requests
-    body.append 'include_headers', opts.headers or false
-
-
-    input = 'https://graph.facebook.com/'
-    init =
-      method: 'POST'
-      body: body
-
-    fetch input, init
-    .then (response) ->
-      if response.ok
-        response.json()
-      else
-        response.json().then (res) -> Promise.reject res.error
+    params =
+      access_token: opts.access_token
+      batch: JSON.stringify requests
+      include_headers: opts.headers or false
+    new Promise (resolve, reject) ->
+      f = opts.api or fetcher
+      f '/', 'POST', params, (response) ->
+        if not response or response.error
+          reject response
+        else
+          resolve response
+      null
     .then (data) ->
       results = calls.map (call, i) ->
         callResponse = data[i]
